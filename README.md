@@ -7,3 +7,7 @@
 执行进行安装：
 
 `bash <(curl -s https://raw.fastgit.org/imldy/OpenVPN-MProxy/master/ovmp-install.sh)`
+
+**注意**：目前版本管理防火墙使用的是iptables，而且会清空你原来的防火墙设置，请谨慎使用。
+
+目前仅支持安装TCP协议运行的OpenVPN
