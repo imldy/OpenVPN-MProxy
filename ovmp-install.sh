@@ -79,7 +79,9 @@ setNetWorkOutput() {
 
 # 修改系统设置
 changeSysctl() {
-  sed -i 's/net.ipv4.ip_forward = 0/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf
+  echo "开启数据包转发"
+  NEW_STR="net.ipv4.ip_forward = 1"
+  echo ${NEW_STR} >> sysctl.conf
   sysctl -p
 }
 # 安装openvpn
@@ -157,10 +159,10 @@ install() {
   getVPNPort
   # 不知为何，如果这里接收来自于函数的返回值，其值不是函数返回的
   # 而且比较有规律，例如1194会变为170，8080会变为144。三位数则原样返回
-#  vpnport=$?
+  #  vpnport=$?
   echo -e "已获取到OpenVPN输入端口:\033[32m${vpnport}\033[0m"
   getMport
-#  mpport=$?
+  #  mpport=$?
   echo -e "已获取到http-proxy输入端口:\033[32m${mpport}\033[0m"
   # 获得网卡名
   getNetworkAdapter
