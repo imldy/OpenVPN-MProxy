@@ -24,6 +24,21 @@ getMport() {
   return ${mpport}
 }
 
+# 获得网卡名
+getNetworkAdapter() {
+  NA0=$(ifconfig)
+  NA1=$(echo ${NA0} | awk '{print $1}')
+  NA=${NA1/:/}
+  echo -e "系统检测到的网卡为："${NA}"\033[0m"
+  read -p "直接回车代表系统检测正确
+  否则请输入N并按回车" determineNA
+  if [ -z $determineNA ]; then
+    echo "确定选择网卡"
+  else
+    read -p "请手动输入你的网卡名，不知道可以退出脚本在命令行输入'ifconfig'查看：" NA
+  fi
+}
+
 selectCertificateSource() {
   echo "请选择证书来源"
   echo " 1. 使用dingd.cn证书（兼容大多数流控）"
@@ -56,6 +71,10 @@ changeFirewall() {
 # 打开协议类型和单个端口
 openPort() {
   iptables -A INPUT -p $1 --dport $2 -j ACCEPT
+}
+
+setNetWorkOutput() {
+	iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o ${NA} -j MASQUERADE
 }
 
 # 修改系统设置
@@ -143,6 +162,8 @@ install() {
   getMport
 #  mpport=$?
   echo -e "已获取到http-proxy输入端口:\033[32m${mpport}\033[0m"
+  # 获得网卡名
+  getNetworkAdapter
   # 获得证书来源
   selectCertificateSource
   certSource=$?
@@ -154,6 +175,8 @@ install() {
   # 防火墙打开对应端口
   openPort "TCP" ${vpnport}
   openPort "TCP" ${mpport}
+  # 设置流量输出网卡
+  setNetWorkOutput
   # 修改系统设置为net.ipv4.ip_forward=1
   changeSysctl
   # 安装OpenVPN
