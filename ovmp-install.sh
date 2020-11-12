@@ -81,7 +81,7 @@ setNetWorkOutput() {
 changeSysctl() {
   echo "开启数据包转发"
   NEW_STR="net.ipv4.ip_forward = 1"
-  echo ${NEW_STR} >> sysctl.conf
+  echo ${NEW_STR} >> /etc/sysctl.conf
   sysctl -p
 }
 # 安装openvpn
