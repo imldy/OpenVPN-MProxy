@@ -74,7 +74,7 @@ openPort() {
 }
 
 setNetWorkOutput() {
-	iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o ${NA} -j MASQUERADE
+  iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o ${NA} -j MASQUERADE
 }
 
 # 修改系统设置
