@@ -183,6 +183,7 @@ install() {
   changeSysctl
   # 安装OpenVPN
   installOpenVPN
+  yum -y install wget
   # 设置OpenVpn配置文件
   setOpenVPNConf ${vpnport}
   # 给OpenVPN设置证书
