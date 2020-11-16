@@ -134,6 +134,7 @@ installMProxy() {
   # 修改转发到的端口
   sed -i "s/443/$1/g" mproxy.c
   # 编译
+  yum -y install gcc
   gcc -o mproxy mproxy.c
 }
 
