@@ -193,12 +193,12 @@ install() {
   downloadCheckpsw
   # 运行OpenVPN
   runOpenVPN
-  # 添加一个用户
-  addUser
   # 下载安装MProxy，设置要转发到的端口
   installMProxy ${vpnport}
   # 运行MProxy，监控前面设置的端口
   runMProxy ${mpport}
+  # 添加一个用户
+  addUser
 
   clientSoftwareIntroduction
 
